@@ -42,9 +42,9 @@
      - Craigslist-Used-Vehicles-Analysis
        
        ├── data
-       │
+       
        ├── notebooks
-       │ 
+        
        └── README.md
     
 # ⚙️Data Cleaning Process
