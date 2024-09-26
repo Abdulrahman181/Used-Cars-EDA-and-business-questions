@@ -39,8 +39,8 @@
     
 # 📂Project Structure
   - The project is organized as follows:
-     - Craigslist-Used-Vehicles-Analysis/
-       │
+     - Craigslist-Used-Vehicles-Analysis
+       
        ├── data
        │
        ├── notebooks
