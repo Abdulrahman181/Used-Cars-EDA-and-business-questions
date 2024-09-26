@@ -2,7 +2,8 @@
 
 # 🎯Project Overview
   - Craigslist is one of the largest platforms for used vehicle sales in the United States.
-  -  This project aims to analyze a dataset scraped from Craigslist to extract valuable insights regarding the used car market, which can be beneficial for buyers, sellers, and car dealers.
+  -  This project aims to analyze a dataset scraped from Craigslist to extract valuable insights regarding the used car market, which can be beneficial for buyers, sellers, 
+     and car dealers.
 
   - The dataset includes detailed information such as price, condition, manufacturer, model, year, and more.
   - This project focuses on cleaning, analyzing, and answering key business questions using this data.
@@ -26,7 +27,7 @@
      - lat/long: Latitude and longitude of the listing location
      - posting_date: The date the listing was posted
        
-# 📈Project Goals
+# 🚀Project Goals
   - Data Extraction: Download and extract the data from Kaggle.
   - Data Cleaning: Identify and resolve data quality issues.
   - Data Analysis: Answer business questions using data analysis techniques.
@@ -47,7 +48,7 @@
         
        └── README.md
     
-# ⚙️Data Cleaning Process
+# 🔍Data Cleaning Process
   - The following steps were taken to clean the dataset:
     - Handling Missing Values: Missing values were filled or removed as appropriate.
     - Converting Data Types: Ensured all columns had consistent data types.
@@ -62,12 +63,12 @@
     - What is the relationship between distance traveled and price?
     - How do prices compare between fuel types?
 
-# 🤖Results and Visualizations
+# 💡Results and Visualizations
   - Example Visualization: The average price of vehicles by manufacturer showed that luxury brands generally have higher prices, while more common brands like Toyota and Ford are more affordable.
   - Finding: Vehicles in good condition have a higher average price, as expected, while "fair" condition cars are the most affordable.
   - All findings are documented .
     
-# 🧑‍🔧Future Work
+# 🔧Future Work
   - Enhance the dataset by adding external data sources, such as car valuation data.
   - Build predictive models to forecast car prices based on features like age, condition, and mileage.
   - Create an interactive dashboard using tools like Power BI or Tableau.
