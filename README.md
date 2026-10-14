@@ -1,85 +1,58 @@
-## Used-Cars-EDA-and-business-questions
+# Used Cars EDA and Business Questions
 
-# 🎯Project Overview
-  - Craigslist is one of the largest platforms for used vehicle sales in the United States.
-  -  This project aims to analyze a dataset scraped from Craigslist to extract valuable insights regarding the used car market, which can be beneficial for buyers, sellers, 
-     and car dealers.
+This repository contains a reproducible exploratory analysis of Craigslist used-car listings. The notebook answers descriptive questions about vehicle type, title status, condition, manufacture year, mileage/price, and fuel type.
 
-  - The dataset includes detailed information such as price, condition, manufacturer, model, year, and more.
-  - This project focuses on cleaning, analyzing, and answering key business questions using this data.
+## Data
 
-# 📊Dataset Information
-  - The dataset was sourced from Kaggle and contains a comprehensive list of used vehicle entries from Craigslist across the United States.
-  -  The main columns include:
-     - id: Unique identifier for each listing
-     - url: URL of the Craigslist listing
-     - region: Region of the vehicle listing
-     - price: Listed price of the vehicle
-     - year: Year of manufacture
-     - manufacturer: Car manufacturer
-     - model: Car model
-     - condition: Condition of the car (e.g., new, like new, good, fair, etc.)
-     - cylinders: Number of engine cylinders
-     - size: Size category of the vehicle
-     - type: Type of vehicle (e.g., SUV, sedan, truck, etc.)
-     - paint_color: Color of the car
-     - state: The state where the car is listed
-     - lat/long: Latitude and longitude of the listing location
-     - posting_date: The date the listing was posted
-       
-# 🚀Project Goals
-  - Data Extraction: Download and extract the data from Kaggle.
-  - Data Cleaning: Identify and resolve data quality issues.
-  - Data Analysis: Answer business questions using data analysis techniques.
-  - Visualization: Provide clear visualizations to illustrate the findings.
-    
-# 🧰Technologies Used
-  - Programming Language: Python
-  - Libraries: Pandas, NumPy, Matplotlib, Seaborn, Plotly
-  - Jupyter Notebook: For documentation and step-by-step analysis
-    
-# 📂Project Structure
-  - The project is organized as follows:
-     - Craigslist-Used-Vehicles-Analysis
-       
-       ├── data
-       
-       ├── notebooks
-        
-       └── README.md
-    
-# 🔍Data Cleaning Process
-  - The following steps were taken to clean the dataset:
-    - Handling Missing Values: Missing values were filled or removed as appropriate.
-    - Converting Data Types: Ensured all columns had consistent data types.
-    - Removing Duplicates: Removed any duplicate listings.
-    - Standardizing Categorical Values: Cleaned and standardized text entries (e.g., manufacturer names, car conditions).
-    - Business Questions and Insights
- - Here are the key business questions addressed in this analysis:
-    - What are the most popular type?
-    - What is the distribution of the number of cars according to title status?
-    - What is the most common condition for cars?
-    - What is the distribution of data over time?
-    - What is the relationship between distance traveled and price?
-    - How do prices compare between fuel types?
+The source dataset is **not committed** because it is large and may contain listing URLs, free-text descriptions, and other identifying or unstable fields. Obtain the authorized `vehicles.csv` file separately, then either:
 
-# 💡Results and Visualizations
-  - Example Visualization: The average price of vehicles by manufacturer showed that luxury brands generally have higher prices, while more common brands like Toyota and Ford are more affordable.
-  - Finding: Vehicles in good condition have a higher average price, as expected, while "fair" condition cars are the most affordable.
-  - All findings are documented .
-    
-# 🔧Future Work
-  - Enhance the dataset by adding external data sources, such as car valuation data.
-  - Build predictive models to forecast car prices based on features like age, condition, and mileage.
-  - Create an interactive dashboard using tools like Power BI or Tableau.
-    
-# 🤝Contributing
-  - Contributions are welcome! If you'd like to contribute, please fork the repository and create a pull request.
+- place it at `data/vehicles.csv` (the recommended local layout), or
+- set `USED_CARS_DATA` to the CSV path before starting Jupyter.
 
-# 💻 Authors
-  - Abdul Rahman Ahmed 
+The notebook stops with a clear `FileNotFoundError` when the data is absent; it does not create synthetic data or claim results without the source file. It validates the required columns before analysis.
 
-  - abdulrahmannassar202@gmail.com
+## Run locally
 
-# 📌 Project link
-  - https://github.com/Abdulrahman181/Used-Cars-EDA-and-business-questions
+```bash
+python -m venv .venv
+. .venv/bin/activate
+python -m pip install -r requirements.txt
+jupyter notebook vehicles-EDA.ipynb
+```
+
+For a non-default location:
+
+```bash
+USED_CARS_DATA=/path/to/vehicles.csv jupyter notebook vehicles-EDA.ipynb
+```
+
+## Repository layout
+
+```text
+.
+├── vehicles-EDA.ipynb
+├── tests/test_repository.py
+├── requirements.txt
+├── pyproject.toml
+├── .gitignore
+└── ENGINEERING_REVIEW.md
+```
+
+## Data quality and interpretation
+
+The notebook coerces only numeric/time fields used by the charts, reports missingness, and excludes invalid values from the relevant comparison rather than filling them with global means. Duplicate listing IDs are reduced to the first occurrence for descriptive analysis. There is no predictive model or train/test split in this repository; if modeling is added, preprocessing must be fitted on the training split only to avoid leakage.
+
+## Validation
+
+Run the repository checks from the project root:
+
+```bash
+pytest -q
+ruff check tests
+```
+
+The tests validate notebook JSON, Python syntax, absence of stale notebook outputs, and portability of the data-loading path. They do not replace running the full notebook with the separately obtained dataset.
+
+## Author
+
+Abdul Rahman Ahmed — <abdulrahmannassar@gmail.com>
