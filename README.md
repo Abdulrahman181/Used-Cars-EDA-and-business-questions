@@ -40,7 +40,7 @@ USED_CARS_DATA=/path/to/vehicles.csv jupyter notebook vehicles-EDA.ipynb
 
 ## Data quality and interpretation
 
-The notebook coerces only numeric/time fields used by the charts, reports missingness, and excludes invalid values from the relevant comparison rather than filling them with global means. Duplicate listing IDs are reduced to the first occurrence for descriptive analysis. There is no predictive model or train/test split in this repository; if modeling is added, preprocessing must be fitted on the training split only to avoid leakage.
+The notebook coerces only numeric/time fields used by the charts, treats mixed date formats and non-finite numeric values safely, reports missingness, and excludes invalid values from the relevant comparison rather than filling them with global means. Duplicate non-missing listing IDs are reduced to the first occurrence while rows without IDs are retained. Manufacture years are restricted to integer values in a plausible historical range. There is no predictive model or train/test split in this repository; if modeling is added, preprocessing must be fitted on the training split only to avoid leakage.
 
 ## Validation
 
@@ -51,7 +51,7 @@ pytest -q
 ruff check tests
 ```
 
-The tests validate notebook JSON, Python syntax, absence of stale notebook outputs, and portability of the data-loading path. They do not replace running the full notebook with the separately obtained dataset.
+The tests validate notebook JSON, Python syntax, absence of stale notebook outputs, portability of the data-loading path, and execution against a small malformed-value fixture. They do not replace running the full notebook with the separately obtained dataset.
 
 ## Author
 

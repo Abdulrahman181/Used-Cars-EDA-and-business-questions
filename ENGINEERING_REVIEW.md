@@ -51,3 +51,32 @@ Reviewed the complete repository at `Abdulrahman181/Used-Cars-EDA-and-business-q
 - Heavy optional execution tooling (`nbformat`/`nbconvert`) was not installed in the sandbox. JSON parsing, AST compilation, unit tests, and code-cell linting were used instead.
 - The notebook is descriptive EDA only. There is no train/test split, predictive model, metric evaluation, or model artifact to audit. If modeling is added, all imputation, encoding, scaling, and feature selection must be fitted on training data only.
 - External Kaggle licensing/provenance and the freshness of the Craigslist scrape require confirmation by the data owner before redistribution or production use.
+
+## Second Senior Review (2026-10-16)
+
+### Scope and additional checks
+
+The tracked repository, complete notebook JSON, all Python/config/test/README/dependency files, current Git history, and working-tree diff were reviewed again. Static AST compilation, notebook-state checks, Ruff, the existing tests, and an execution test using a deliberately malformed-value fixture were performed. No API, UI, model artifact, secret, source dataset, or untracked application code was present.
+
+### Additional findings fixed
+
+- **Fractional manufacture years could crash the notebook.** The previous `astype("Int64")` failed on values such as `2018.5`. Year plotting now keeps only integer years in a plausible range (1886 through the current UTC year), so malformed or future values are excluded rather than silently rounded.
+- **Rows with missing IDs could be silently collapsed.** When any ID existed, `drop_duplicates(subset=["id"])` treated all missing IDs as one duplicate group. De-duplication now applies only to non-missing IDs and retains every row without an ID, preserving evidence that cannot be proven duplicate. Original row order is retained.
+- **Mixed date formats and non-finite numerics were not handled explicitly.** Date parsing now uses pandas' supported `format="mixed"` mode; numeric analysis columns convert infinities to missing values before chart filters.
+- **Configured paths were less defensive than needed.** Blank environment values are treated as unset, user-home expansion is supported, and successful paths are normalized to absolute paths. Default candidates are anchored to the current working directory used by the documented command.
+- **Runtime coverage was too static.** Tests now execute all notebook code cells with a temporary CSV containing duplicate IDs, missing IDs, malformed numeric/date values, negative mileage, and a fractional year. This is a contract test only; it does not create or claim production EDA results.
+
+### Validation after the second review
+
+- `pytest -q`: **5 passed** (including the fixture-backed notebook execution test).
+- `ruff check tests /tmp/vehicles_second_review.py`: **all checks passed**; the temporary file contains extracted notebook code and is outside the repository.
+- Python AST parsing of every code cell: **passed**.
+- Notebook JSON validation: **passed**; all code-cell outputs are empty and execution counts are `null`.
+- No source dataset was downloaded or fabricated, so no numerical business findings or end-to-end run are claimed.
+
+### Remaining risks
+
+- Full execution with the authorized real `vehicles.csv` remains unverified because the repository intentionally does not contain that dataset.
+- The schema contract still assumes the nine required column names; a differently structured authorized export needs an explicit adapter rather than implicit inference.
+- The plausible manufacture-year bounds are pragmatic EDA filters, not a domain-certified data-quality policy; they should be reviewed if the source covers antique vehicles or future-dated listings.
+- This repository remains descriptive EDA only: there is no train/test split, predictive metric, API/UI, or artifact-loading path to validate. If modeling is added, fit all preprocessing on training data only.
